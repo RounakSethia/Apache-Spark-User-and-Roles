@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class MainFile {
-    public static void main(String[] args){
+    public static void main (String[] arg){
+
         Scanner sc = new Scanner(System.in);
-        /*
         System.out.println("Enter users and entitlements data path");
         String pathUser = sc.nextLine();
         System.out.println("Enter roles and entitlements data path");
@@ -12,13 +12,14 @@ public class MainFile {
         String pathRoleAssigned = sc.nextLine();
         System.out.println("Enter path for orphan entitlements to be saved");
         String pathOrphanEntitlements = sc.nextLine();
-        */
-
         Manager manage = new Manager();
-        //manage.logic(pathUser,pathRole,pathRoleAssigned,pathOrphanEntitlements);
-        manage.logic("C:/Users/vibhor/Downloads/Users - Sheet1.csv",
-                "C:/Users/vibhor/Downloads/Roles - Sheet1.csv",
-                "C:\\Users\\vibhor\\Downloads\\RoleAssign.csv",
-                "C:\\Users\\vibhor\\Downloads\\OrphanEntitlement.csv");
+        manage.logic(pathUser,pathRole,pathRoleAssigned,pathOrphanEntitlements);
     }
+}
+    /*
+        C:\Users\vibhor\Downloads\Users - Sheet1.csv
+        C:\Users\vibhor\Downloads\Roles - Sheet1.csv
+        C:\Users\vibhor\Downloads\RoleAssign.csv
+        C:\Users\vibhor\Downloads\OrphanEntitlement.csv
+    */
 }
