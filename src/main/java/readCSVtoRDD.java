@@ -10,15 +10,19 @@ import java.util.Set;
 public class readCSVtoRDD {
     public JavaPairRDD<String, Set<String>> read(String path, JavaSparkContext sc){
 
-        JavaRDD<String> RDD = sc.textFile(path,4);
+        JavaRDD<String> RDD = sc.textFile(path);
         JavaPairRDD<String, Set<String>> Pair = RDD.mapToPair( inputLine -> {
             String[] col = inputLine.split(",");
             Set<String> entitlements = new HashSet<>(Arrays.asList(col).subList(1, col.length));
-            //System.out.println(col[0] + " has been read");
             return new Tuple2<>(col[0],entitlements);
         });
-
         System.out.println(path + " has been read");
         return (Pair);
     }
+    /*public JavaPairRDD<String, Set<String>> removeDuplicateRoles (JavaPairRDD<String, Set<String>> roles){
+        JavaPairRDD<String, Set<String>> redRoles = roles;
+        redRoles.cache();
+        for (Tuple2<String,Set<String>> role : roles.collect()){
+        }
+    }*/
 }

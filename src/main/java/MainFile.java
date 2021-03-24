@@ -1,4 +1,4 @@
-//import java.util.Scanner;
+import java.util.Scanner;
 
 public class MainFile {
     /*
@@ -26,6 +26,7 @@ public class MainFile {
         Manager manage = new Manager();
         manage.logic(pathUser,pathRole,pathRoleAssigned,pathOrphanEntitlements);
     }
+
 }
 /*
     "C:Users\vibhor\Downloads\Users - Sheet1.csv"
