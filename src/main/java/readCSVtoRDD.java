@@ -10,7 +10,7 @@ import java.util.Set;
 public class readCSVtoRDD {
     public JavaPairRDD<String, Set<String>> read(String path, JavaSparkContext sc){
 
-        JavaRDD<String> RDD = sc.textFile(path,4);
+        JavaRDD<String> RDD = sc.textFile(path);
         JavaPairRDD<String, Set<String>> Pair = RDD.mapToPair( inputLine -> {
             String[] col = inputLine.split(",");
             Set<String> entitlements = new HashSet<>(Arrays.asList(col).subList(1, col.length));
