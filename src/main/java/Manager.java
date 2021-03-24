@@ -14,7 +14,7 @@ public class Manager {
 
         System.setProperty("hadoop.home.dir", "C:/Users/vibhor/Downloads/hadoop");
         Logger.getLogger("org.apache").setLevel(Level.ERROR);
-        SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[3]").set("spark.executor.memory","2g");
+        SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[*]").set("spark.executor.memory","2g");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaPairRDD<String, Set<String>> userPair = readFile.read(userPath,sc);

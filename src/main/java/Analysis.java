@@ -9,7 +9,7 @@ public class Analysis {
         List<String> listOrphan = new ArrayList<>();
 
         for (Tuple2<String, Set<String>> user : userPair.collect()){
-            JavaPairRDD<String, Set<String>> goodRoles = rolePair.filter(line -> user._2.containsAll(line._2)).repartition(5);
+            JavaPairRDD<String, Set<String>> goodRoles = rolePair.filter(line -> user._2.containsAll(line._2));
             goodRoles.cache();
             listRole.add(user._1 + removeRedundant(goodRoles));
             listOrphan.add(orphanEntitlements(user,goodRoles));
