@@ -7,7 +7,7 @@ public class Analysis {
     public Map<String,List<String>> assignRole(JavaPairRDD<String, Set<String>> userPair,JavaPairRDD<String, Set<String>> rolePair){
         List<String> listRole = new ArrayList<>();
         List<String> listOrphan = new ArrayList<>();
-
+        
         for (Tuple2<String, Set<String>> user : userPair.collect()){
             JavaPairRDD<String, Set<String>> goodRoles = rolePair.filter(line -> user._2.containsAll(line._2)).coalesce(2);
             goodRoles.cache();
