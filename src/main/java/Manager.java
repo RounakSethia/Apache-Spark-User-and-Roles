@@ -7,7 +7,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.util.*;
 
 public class Manager {
-    public void logic(String userPath, String rolePath, String roleAssignPath, String orphanEntitlementsPath){
+    public void logic(String userPath, String rolePath, String roleAssignPath, String orphanEntitlementsPath) {
         readCSVtoRDD readFile = new readCSVtoRDD();
         Analysis analysis = new Analysis();
         WriteFile writeFile = new WriteFile();
@@ -19,16 +19,16 @@ public class Manager {
 
         JavaPairRDD<String, Set<String>> userPair = readFile.read(userPath,sc);
         JavaPairRDD<String,Set<String>> rolePair = readFile.read(rolePath,sc);
-        userPair.cache();
-        rolePair.cache();
 
-        Map<String,List<String>> List = analysis.assignRole(userPair,rolePair);
+        Map<String, StringBuilder> List = analysis.assignRole(userPair,rolePair);
 
         writeFile.WritePath(List,roleAssignPath,orphanEntitlementsPath);
          /**
          * Below part is only to stop from exiting while I check on localhost
          */
+        /*
         Scanner scan = new Scanner(System.in);
-        scan.nextLine();
+         scan.nextLine();
+        */
     }
 }
