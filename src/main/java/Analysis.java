@@ -8,7 +8,6 @@ public class Analysis {
         StringBuilder listOrphanEntitlements = new StringBuilder();
 
         userPair = userPair.cache();
-
         Map<String,Set<String>> roleMap = rolePair.collectAsMap();
 
         userPair.foreach(userList -> {
@@ -18,7 +17,7 @@ public class Analysis {
                 if (userList._2.containsAll(roleEntitlements))
                     goodRoles.add(roleEntry.getKey());
             }
-            goodRoles = removeRedundant(goodRoles, roleMap);
+            removeRedundant(goodRoles, roleMap);
             listRoleAssign.append(stringRole(userList._1,goodRoles));
             listOrphanEntitlements.append(orphanEntitlements(goodRoles,roleMap,userList._2, userList._1));
         });
