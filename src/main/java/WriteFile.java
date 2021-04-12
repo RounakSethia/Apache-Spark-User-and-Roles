@@ -4,6 +4,7 @@ import org.apache.commons.csv.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class WriteFile {
@@ -14,15 +15,14 @@ public class WriteFile {
      * @param pathOrphanEntitlements
      * @throws IOException
      */
-    public void WritePath(Map<String, StringBuilder> list, String pathRoleAssigned, String pathOrphanEntitlements){
+    public void WritePath(Map<String, List<String>> list, String pathRoleAssigned, String pathOrphanEntitlements){
         logger.info("Starting Write");
         try {
-            CSVPrinter printRA = new CSVPrinter(new FileWriter(pathRoleAssigned), CSVFormat.EXCEL);
+            CSVPrinter printRA = new CSVPrinter(new FileWriter(pathRoleAssigned), CSVFormat.DEFAULT);
             CSVPrinter printOE = new CSVPrinter(new FileWriter(pathOrphanEntitlements),CSVFormat.EXCEL);
             logger.debug("Adding StringBuilder to CSV records");
-
-            printRA.printRecords(list.get("0"));
-            printOE.printRecords(list.get("1"));
+            printRA.printRecords(list.get("0").toString());
+            printOE.printRecords(list.get("1").toString());
             logger.debug("Completed adding StringBuilder to CSV records");
 
             printRA.close();
@@ -30,7 +30,7 @@ public class WriteFile {
             logger.info("Finished writing successfully");
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("ERROR while writing " + e.toString());
+            logger.error("ERROR while writing " + e);
         }
     }
 }

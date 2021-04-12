@@ -3,25 +3,29 @@ import org.apache.spark.api.java.JavaPairRDD;
 import java.util.*;
 
 public class Analysis {
-    public static Map<String, java.lang.StringBuilder> assignRole(JavaPairRDD<String, Set<String>> userPair, JavaPairRDD<String, Set<String>> rolePair){
-        StringBuilder listRoleAssign = new StringBuilder();
-        StringBuilder listOrphanEntitlements = new StringBuilder();
+    public static List<String> listRoleAssign = new ArrayList<>();
+    public static List<String> listOrphanEntitlements = new ArrayList<>();
+    private static int i=0;
 
+    public static Map<String,List<String>> assignRole(JavaPairRDD<String, Set<String>> userPair, JavaPairRDD<String, Set<String>> rolePair){
         userPair = userPair.cache();
         Map<String,Set<String>> roleMap = rolePair.collectAsMap();
 
         userPair.foreach(userList -> {
-            List<String> goodRoles = new ArrayList<>();
+            /*List<String> goodRoles = new ArrayList<>();
             for (Map.Entry<String,Set<String>> roleEntry : roleMap.entrySet()) {
                 Set<String> roleEntitlements = new HashSet<>(roleMap.get(roleEntry.getKey()));
                 if (userList._2.containsAll(roleEntitlements))
                     goodRoles.add(roleEntry.getKey());
             }
             removeRedundant(goodRoles, roleMap);
-            listRoleAssign.append(stringRole(userList._1,goodRoles));
-            listOrphanEntitlements.append(orphanEntitlements(goodRoles,roleMap,userList._2, userList._1));
+            stringRole(userList._1,goodRoles);
+            orphanEntitlements(goodRoles,roleMap,userList._2, userList._1);*/
+            //System.out.print(userList._1);
+            i++;
         });
-
+        System.out.println("\n" + i + "        " + userPair.count());
+        System.out.println(listRoleAssign.size() +"\t\t\t\t\t" + listOrphanEntitlements.size());
         /** This is for when you want every role to be partitioned and executed according to it.
          *
          * for (Tuple2<String, Set<String>> user : userPair.collect()){
@@ -31,7 +35,8 @@ public class Analysis {
             listRoleAssign.add(user._1 + removeRedundant2(goodRoles));
             listOrphanEntitlements.add(orphanEntitlements2(user,goodRoles));
         }*/
-        Map<String, StringBuilder> map = new HashMap<>();
+
+        Map<String, List<String>> map = new HashMap<>();
         map.put("0",listRoleAssign);
         map.put("1",listOrphanEntitlements);
         return (map);
@@ -54,19 +59,19 @@ public class Analysis {
         }
         return goodRoles;
     }
-    public static String orphanEntitlements(List<String> goodRoles, Map<String, Set<String>> roleMap, Set<String> userEntitlements, String userName) {
+    public static void orphanEntitlements(List<String> goodRoles, Map<String, Set<String>> roleMap, Set<String> userEntitlements, String userName) {
         for (String goodRole : goodRoles) {
             userEntitlements.removeAll(roleMap.get(goodRole));
         }
-        return(userName + "," + String.join(",", userEntitlements) + "\n");
+        listOrphanEntitlements.add(userName + "," + String.join(",", userEntitlements) + "\n");
     }
-    private static String stringRole(String userName, List<String> goodRoles){
+    private static void stringRole(String userName, List<String> goodRoles){
         StringBuilder roleAssign = new StringBuilder(userName + ",");
         for (String goodRole : goodRoles) {
             roleAssign.append(goodRole).append(",");
         }
         roleAssign.append("\n");
-        return(roleAssign.toString());
+        listRoleAssign.add(roleAssign.toString());
     }
     /**private static String orphanEntitlements2(Tuple2<String, Set<String>> user, JavaPairRDD<String, Set<String>> goodRoles){
         for(Tuple2<String,Set<String>> orphan : goodRoles.collect()){
