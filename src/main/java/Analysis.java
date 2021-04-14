@@ -22,7 +22,7 @@ public class Analysis {
                 if (userList._2.containsAll(roleEntitlements))
                     goodRoles.add(roleEntry.getKey());
             }
-            removeRedundant(goodRoles, roleMap);
+            goodRoles = removeRedundant(goodRoles, roleMap);
             listRoleAssign.add(stringRole(userList._1,goodRoles));
             listOrphanEntitlements.add(orphanEntitlements(goodRoles,roleMap,userList._2, userList._1));
         });
