@@ -24,8 +24,6 @@ public class Manager {
 
         Map<String, List<String>> listMap = analysis.assignRole(userPair,rolePair);
 
-        JavaRDD<String> RDDRoleAssign = sc.parallelize(listMap.get("0"));
-        //System.out.println(RDDRoleAssign.count() + "        " + listMap.get("0").size());
         writeFile.WritePath(listMap,roleAssignPath,orphanEntitlementsPath);
         /**
          * Below part is only to stop from exiting while I check on localhost

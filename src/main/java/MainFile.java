@@ -21,8 +21,8 @@ public class MainFile {
 
         String pathUser = "C:/Users/vibhor/Downloads/Users - Sheet1.csv";
         String pathRole = "C:/Users/vibhor/Downloads/Roles - Sheet1.csv";
-        String pathRoleAssigned = "C:/Users/vibhor/Downloads/RoleAssign.csv";
-        String pathOrphanEntitlements = "C:/Users/vibhor/Downloads/OrphanEntitlement.csv";
+        String pathRoleAssigned = "C:/Users/vibhor/Downloads/RoleAssign";
+        String pathOrphanEntitlements = "C:/Users/vibhor/Downloads/OrphanEntitlement";
         Manager manage = new Manager();
         manage.logic(pathUser,pathRole,pathRoleAssigned,pathOrphanEntitlements);
     }
