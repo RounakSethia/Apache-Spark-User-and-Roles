@@ -2,7 +2,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
 import java.util.*;
@@ -16,7 +15,6 @@ public class Manager {
         System.setProperty("hadoop.home.dir", "C:/Users/vibhor/Downloads/hadoop");
         Logger.getLogger("org.apache").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[*]");
-        //conf.set("spark.serializer","org.apache.spark.serializer.kryoSerializer");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaPairRDD<String, Set<String>> userPair = readFile.read(userPath,sc);
